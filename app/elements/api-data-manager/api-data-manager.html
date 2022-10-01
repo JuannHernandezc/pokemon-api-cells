@@ -1,0 +1,91 @@
+<link rel="import" href="../../../components/cells-generic-dp/cells-generic-dp.html">
+<dom-module id="api-data-manager">
+
+  <template>
+    <cells-generic-dp 
+      host="https://pokeapi.co/api/v2"
+      path="pokemon"
+      method="GET"
+      on-request-success="setResponse"
+      auto
+  ></cells-generic-dp>
+  <template is="dom-repeat" items="[[listPokemon]]">
+    <cells-generic-dp
+      host="[[item.url]]"
+      method="GET"
+      on-request-success="setResponseImages"
+      auto
+  ></cells-generic-dp>
+  </template>
+  </template>
+
+  <script>
+    class ApiDataManager extends Polymer.Element {
+
+      static get is() {
+        return 'api-data-manager';
+      }
+
+      // Declare properties for the element's public API
+      static get properties() {
+        return {
+          host: {type: String},
+          path: {type: String},
+          method: {type: String},
+          listPokemonInfoCard: {
+            type: Array,
+            value: function() {
+              return [];
+            }
+          },
+          listPokemon: {
+            type: Array,
+            value: function() {
+              return [];
+            }
+          },
+        };
+      }
+
+      setResponse(e) {
+        this.listPokemon = e.detail.results;
+        // console.log(e.detail.results);
+      }
+
+      setResponseImages(e) {
+        this.push('listPokemonInfoCard', {
+          id: e.detail.id,
+          name: e.detail.name,
+          urlImage: e.detail.sprites.other.home.front_default,
+          weight: e.detail.weight,
+          abilities: e.detail.abilities,
+          types: e.detail.types,
+          stats: e.detail.stats
+        });
+
+        if (this.listPokemonInfoCard.length === 20) {
+          this._fireEvent('send-data-pokemon-card', this.listPokemonInfoCard);
+          console.log('Evento send-data-pokemon-card Disparado');
+          console.log(this.listPokemonInfoCard);
+        }
+        // console.log(e.detail.sprites.other.home.front_default);
+        // console.log(e.detail.name);
+      }
+
+      _fireEvent(eventName, detail) {
+        return this.dispatchEvent(new CustomEvent(eventName,
+          {
+            bubbles: true,
+            composed: true,
+            detail: detail
+          }
+        ));
+      }
+
+
+    }
+
+    customElements.define(ApiDataManager.is, ApiDataManager);
+  </script>
+
+</dom-module>

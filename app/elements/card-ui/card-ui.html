@@ -1,0 +1,101 @@
+<link rel="import" href="../../../components/cells-image-card/cells-image-card.html">
+<link rel="import" href="../../../components/cells-st-button/cells-st-button.html">
+<link rel="import" href="../../../components/coronita-icons/coronita-icons.html">
+<dom-module id="card-ui">
+  <template>
+    <style>
+      .container-elements{
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        font-size: 30px;
+      }
+    </style>
+      <cells-image-card
+      alt="[[namePokemon]]"
+      default-image-url="[[urlImagePokemon]]">
+      <div slot="card-content" class="container-elements">
+        [[namePokemon]]
+        <cells-st-button class="composed primary">
+          <button on-click="handleClick">
+              <span class="btn-contents">
+                <iron-icon class="btn-icon" icon="coronita:advance"></iron-icon>
+                <span class="btn-text" data-detail-gifs = "handleDetail">
+                  [[textBtn]]
+                </span>
+              </span>
+            </button>
+        </cells-st-button>
+      </div>
+      </cells-image-card>
+
+  </template>
+
+  <script>
+    class CardUi extends Polymer.Element {
+
+      static get is() {
+        return 'card-ui';
+      }
+
+      // Declare properties for the element's public API
+      static get properties() {
+        return {
+          namePokemon: {type: String},
+          urlImagePokemon: {type: String},
+          weight: {type: Number},
+          id: {type: Number},
+          abilities: {
+            type: Array,
+            value: function() {
+              return [];
+            }
+          },
+          stats: {
+            type: Array,
+            value: function() {
+              return [];
+            }
+          },
+          types: {
+            type: Array,
+            value: function() {
+              return [];
+            }
+          },
+          textBtn: {type: String}
+        };
+      }
+
+      handleDetail(){
+        return {
+          namePokemon: this.namePokemon,
+          urlImagePokemon: this.urlImagePokemon,
+          weight: this.weight,
+          id: this.id,
+          abilities: this.abilities,
+          stats: this.stats,
+          types: this.types
+        }
+      }
+
+      handleClick(){
+        this.dispatchEvent( new CustomEvent('set-data-detail', 
+          { 
+            bubbles: true,
+            composed: true,
+            detail: this.handleDetail()
+          }
+        ));
+        console.log('Evento enviado al momento de dar click en more details');
+        console.log(this.handleDetail());
+      }
+      
+    }
+    customElements.define(CardUi.is, CardUi);
+  </script>
+
+</dom-module>

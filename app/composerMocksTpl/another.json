@@ -10,53 +10,16 @@
     {
       "zone": "app__main",
       "type": "UI",
-      "familyPath": "../elements/another-page",
-      "tag": "another-page",
+      "familyPath": "../elements/card-detail-ui",
+      "tag": "card-detail-ui",
       "properties": {
         "cellsConnections": {
           "in": {
-            "dm-example-channel": {
-              "bind": "propertyUser"
+            "data-detail-card": {
+              "bind": "getDataDetailPokemon"
             }
           },
-          "out": {
-            "foobar-channel": {
-              "bind": "home-event",
-              "link": {
-                "page": "login"
-              }
-            }
-          },
-          "params": {
-            "propertyForUseId": "idForUseInAnotherPage"
-          }
-        }
-      }
-    },
-    {
-      "zone": "app__main",
-      "type": "CC",
-      "familyPath": "../elements/example-cross-component",
-      "tag": "example-cross-component",
-      "properties": {
-        "cellsConnections": {
-          "in": {},
           "out": {}
-        }
-      }
-    },
-    {
-      "zone": "app__main",
-      "type": "DM",
-      "familyPath": "../elements/example-data-manager",
-      "tag": "example-data-manager",
-      "properties": {
-        "cellsConnections": {
-          "out": {
-            "dm-example-channel": {
-              "bind": "users-changed"
-            }
-          }
         }
       }
     }

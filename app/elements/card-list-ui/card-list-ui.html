@@ -1,0 +1,67 @@
+<link rel="import" href="../../../components/cells-component-app-header/cells-component-app-header.html">
+<link rel="import" href="../../elements/card-ui/card-ui.html">
+<dom-module id="card-list-ui">
+  <template>
+    <style>
+      :host {
+        display: block;
+        background-color: #E9F1F7;
+      }
+      .container-cards{
+        margin-top: 50px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        gap: 30px;
+        padding: 30px;
+      }
+    </style>
+      <div slot="app__header">
+        <cells-component-app-header text="Web Application - PokeDesk">
+        </cells-component-app-header>
+      </div>
+      <div slot="app__main">
+        <div class="container-cards">
+          <template is="dom-repeat" items="[[data]]">
+            <div class="card">
+              <card-ui 
+                name-pokemon="[[item.name]]" 
+                url-image-pokemon="[[item.urlImage]]" 
+                id="[[item.id]]"
+                abilities="[[item.abilities]]"
+                weight="[[item.weight]]"
+                stats="[[item.stats]]"
+                types="[[item.types]]"
+                text-btn="More details">
+              </card-ui>
+            </div>
+          </template>
+        </div>
+      </div>
+  </template>
+
+  <script>
+    class CardListUi extends Polymer.Element {
+
+      static get is() {
+        return 'card-list-ui';
+      }
+
+      // Declare properties for the element's public API
+      static get properties() {
+        return {
+          data: {
+            type: Array
+          }
+        };
+      }
+      
+      setDataImages(mainInfoCard) {
+        console.log('informacion recibida por canal')
+        console.log(mainInfoCard);
+        this.data = mainInfoCard;
+      }
+    }
+    customElements.define(CardListUi.is, CardListUi);
+  </script>
+
+</dom-module>

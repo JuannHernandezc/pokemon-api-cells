@@ -1,0 +1,140 @@
+<link rel="import" href="../../../components/cells-component-app-header/cells-component-app-header.html">
+<link rel="import" href="../../../components/cells-image-card/cells-image-card.html">
+<link rel="import" href="../../../components/cells-st-button/cells-st-button.html">
+<link rel="import" href="../../../components/coronita-icons/coronita-icons.html">
+<dom-module id="card-detail-ui">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .card{
+        display: block;
+        width: 40%;
+        margin: 50px auto;
+        /* width: 100%;
+        min-height: 100vh; */
+        /* display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 1rem; */
+      }
+
+      /* .container-elements{
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      } */
+    </style>
+      <div slot="app__header">
+        <cells-component-app-header text="PokeDesk - Detail" icon-left="coronita:return-12" left-button-pressed="prueba">
+        </cells-component-app-header>
+      </div>
+      <div slot="app__main">
+        <div class="card">
+          <cells-image-card
+          alt="[[namePokemon]]"
+          default-image-url="[[urlImagePokemon]]" class="image-card">
+          <div slot="card-content" class="container-elements">
+            <h2>[[namePokemon]]</h2>
+            <p><b>id: </b>[[id]]</p>
+            <p><b>Weight: </b>[[weight]]</p>
+            <p>
+              <b>Abilities: </b>
+              <template is="dom-repeat" items="[[abilities]]">
+                <p>abilitie: [[item.ability.name]]</p>
+                <hr>
+              </template>
+            </p>
+            <p>
+              <b>Stats: </b>
+              <template is="dom-repeat" items="[[stats]]">
+                <p>Name: [[item.stat.name]]</p>
+                <p>Base Stat: [[item.base_stat]]</p>
+                <p>Effort: [[item.effort]]</p>
+                <hr>
+              </template>
+            </p>
+            <p>
+              <b>Types: </b>
+              <template is="dom-repeat" items="[[types]]">
+                <p>Name: [[item.type.name]]</p>
+                <hr>
+              </template>
+            </p>
+
+            <cells-st-button class="composed primary">
+              <button on-click="prueba">
+                  <span class="btn-contents">
+                    <iron-icon class="btn-icon" icon="coronita:back"></iron-icon>
+                    <span class="btn-text" data-detail-gifs = "handleDetail">
+                      Evolution
+                    </span>
+                  </span>
+                </button>
+            </cells-st-button>
+          </div>
+          </cells-image-card>
+        </div>
+      </div>
+  </template>
+
+  <script>
+    class CardDetailUi extends Polymer.Element {
+
+      static get is() {
+        return 'card-detail-ui';
+      }
+
+      // Declare properties for the element's public API
+      static get properties() {
+        return {
+          namePokemon: {type: String},
+          urlImagePokemon: {type: String},
+          weight: {type: Number},
+          id: {type: Number},
+          abilities: {
+            type: Array,
+            value: function() {
+              return [];
+            }
+          },
+          stats: {
+            type: Array,
+            value: function() {
+              return [];
+            }
+          },
+          types: {
+            type: Array,
+            value: function() {
+              return [];
+            }
+          }
+        };
+      }
+
+      getDataDetailPokemon(detail) {
+        console.log("Detail => Informacion recibida por canal ");
+        console.log(detail);
+        this.namePokemon = detail.namePokemon;
+        this.urlImagePokemon = detail.urlImagePokemon;
+        this.weight = detail.weight;
+        this.id = detail.id;
+        this.abilities = detail.abilities;
+        this.stats = detail.stats;
+        this.types = detail.types;
+      }
+      prueba(){
+        this.navigate("login");
+      }
+    }
+    customElements.define(CardDetailUi.is, CardDetailUi);
+  </script>
+
+</dom-module>
