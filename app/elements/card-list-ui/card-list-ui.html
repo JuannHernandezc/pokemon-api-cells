@@ -31,6 +31,7 @@
                 weight="[[item.weight]]"
                 stats="[[item.stats]]"
                 types="[[item.types]]"
+                species="[[item.species]]"
                 text-btn="More details">
               </card-ui>
             </div>
@@ -54,10 +55,7 @@
           }
         };
       }
-      
       setDataImages(mainInfoCard) {
-        console.log('informacion recibida por canal')
-        console.log(mainInfoCard);
         this.data = mainInfoCard;
       }
     }

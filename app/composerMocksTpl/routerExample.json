@@ -10,24 +10,12 @@
     {
       "zone": "app__main",
       "type": "UI",
-      "familyPath": "../elements/router-example",
-      "tag": "router-example",
+      "familyPath": "../elements/evolution-detail-ui",
+      "tag": "evolution-detail-ui",
       "properties": {
        "cellsConnections": {
           "in": {},
-          "out": {
-            "return-home": {
-              "bind": "home-event",
-              "link" : {
-                "page" : "login"
-              }
-            }
-          },
-          "params": {
-            "propertyQueryStringToPrettyUrl": "queryStringToPrettyUrl",
-            "propertyQueryStringForUseInRouterPage":"queryStringForUseInRouterPage",
-            "propertyOtherqueryStringForUseInRouterPage": "otherQueryStringForUseInRouterPage"
-          }
+          "out": {}
         }
       }
     }

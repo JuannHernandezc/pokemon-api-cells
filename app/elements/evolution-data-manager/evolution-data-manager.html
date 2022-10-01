@@ -1,0 +1,191 @@
+<link rel="import" href="../../../components/cells-generic-dp/cells-generic-dp.html">
+<dom-module id="evolution-data-manager">
+
+  <template>
+    <template is="dom-if" if="[[host]]">
+      <cells-generic-dp 
+        host="[[host]]"
+        method="GET"
+        on-request-success="setResponse"
+        auto
+    ></cells-generic-dp>
+    </template>
+
+    <template is="dom-if" if="[[hostEvolution]]">
+      <cells-generic-dp 
+        host="[[hostEvolution]]"
+        method="GET"
+        on-request-success="setResponseEvolution"
+        auto
+    ></cells-generic-dp>
+    </template>
+
+    <template is="dom-if" if="[[pokemonSpeciesOne]]">
+      <cells-generic-dp 
+        host="[[pokemonSpeciesOne]]"
+        method="GET"
+        on-request-success="setResponseEvolutionOne"
+        auto
+    ></cells-generic-dp>
+    </template>
+
+    <template is="dom-if" if="[[pokemonSpeciesTwo]]">
+      <cells-generic-dp 
+        host="[[pokemonSpeciesTwo]]"
+        method="GET"
+        on-request-success="setResponseEvolutionTwo"
+        auto
+    ></cells-generic-dp>
+    </template>
+
+    <template is="dom-if" if="[[pokemonSpeciesThree]]">
+      <cells-generic-dp 
+        host="[[pokemonSpeciesThree]]"
+        method="GET"
+        on-request-success="setResponseEvolutionThree"
+        auto
+    ></cells-generic-dp>
+    </template>
+
+
+    <template is="dom-if" if="[[pokemonMainOne]]">
+      <cells-generic-dp 
+        host="[[pokemonMainOne]]"
+        method="GET"
+        on-request-success="setResponseFinalPokemonOne"
+        auto
+    ></cells-generic-dp>
+    </template>
+
+    <template is="dom-if" if="[[pokemonMainTwo]]">
+      <cells-generic-dp 
+        host="[[pokemonMainTwo]]"
+        method="GET"
+        on-request-success="setResponseFinalPokemonTwo"
+        auto
+    ></cells-generic-dp>
+    </template>
+
+    <template is="dom-if" if="[[pokemonMainThree]]">
+      <cells-generic-dp 
+        host="[[pokemonMainThree]]"
+        method="GET"
+        on-request-success="setResponseFinalPokemonThree"
+        auto
+    ></cells-generic-dp>
+    </template>
+  <!-- <template is="dom-repeat" items="[[listPokemon]]">
+    <cells-generic-dp
+      host="[[item.url]]"
+      method="GET"
+      on-request-success="setResponseImages"
+      auto
+  ></cells-generic-dp>
+  </template> -->
+  </template>
+
+  <script>
+    class EvolutionDataManager extends Polymer.Element {
+
+      static get is() {
+        return 'evolution-data-manager';
+      }
+
+      // Declare properties for the element's public API
+      static get properties() {
+        return {
+          host: {type: String},
+          hostEvolution: {type: String},
+          pokemonSpeciesOne: {type: String},
+          pokemonSpeciesTwo: {type: String},
+          pokemonSpeciesThree: {type: String},
+          pokemonMainOne: {type: String},
+          pokemonMainTwo: {type: String},
+          pokemonMainThree: {type: String},
+          pokemonNameEvolutionOne: {type: String},
+          pokemonImgEvolutionOne: {type: String},
+          listPokemonEvolution: {
+            type: Array,
+            value: function() {
+              return [];
+            }
+          },
+        };
+      }
+
+      setResponse(e) {
+        this.hostEvolution = e.detail.evolution_chain.url;
+      }
+
+      setResponseEvolution(e) {
+        this.listPokemonEvolution = [];
+        this.pokemonSpeciesOne = e.detail.chain.species.url;
+        this.pokemonSpeciesTwo = e.detail.chain.evolves_to[0].species.url;
+        this.pokemonSpeciesThree = e.detail.chain.evolves_to[0].evolves_to[0].species.url;
+      }
+
+      setResponseEvolutionOne(e) {
+        this.pokemonMainOne = e.detail.varieties[0].pokemon.url;
+      }
+
+      setResponseEvolutionTwo(e) {
+        this.pokemonMainTwo = e.detail.varieties[0].pokemon.url;
+      }
+
+      setResponseEvolutionThree(e) {
+        this.pokemonMainThree = e.detail.varieties[0].pokemon.url;
+      }
+
+      setResponseFinalPokemonOne(e) {
+        this.pokemonNameEvolutionOne = e.detail.name;
+        this.pokemonImgEvolutionOne = e.detail.sprites.other.home.front_default;
+
+        this.push('listPokemonEvolution', {
+          pokemonNameEvolution: this.pokemonNameEvolutionOne,
+          pokemonImgEvolution: this.pokemonImgEvolutionOne
+        });
+      }
+
+      setResponseFinalPokemonTwo(e) {
+        this.pokemonNameEvolutionTwo = e.detail.name;
+        this.pokemonImgEvolutionTwo = e.detail.sprites.other.home.front_default;
+
+        this.push('listPokemonEvolution', {
+          pokemonNameEvolution: this.pokemonNameEvolutionTwo,
+          pokemonImgEvolution: this.pokemonImgEvolutionTwo
+        });
+      }
+
+      setResponseFinalPokemonThree(e) {
+        this.pokemonNameEvolutionThree = e.detail.name;
+        this.pokemonImgEvolutionThree = e.detail.sprites.other.home.front_default;
+
+        this.push('listPokemonEvolution', {
+          pokemonNameEvolution: this.pokemonNameEvolutionThree,
+          pokemonImgEvolution: this.pokemonImgEvolutionThree
+        });
+
+        this._fireEvent('send-evolution-data', this.listPokemonEvolution);
+      }
+
+      getEvolutionLink(dataEvolution) {
+        this.host = dataEvolution.url;
+      }
+
+      _fireEvent(eventName, detail) {
+        return this.dispatchEvent(new CustomEvent(eventName,
+          {
+            bubbles: true,
+            composed: true,
+            detail: detail
+          }
+        ));
+      }
+
+
+    }
+
+    customElements.define(EvolutionDataManager.is, EvolutionDataManager);
+  </script>
+
+</dom-module>

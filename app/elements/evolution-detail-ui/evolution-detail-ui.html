@@ -1,0 +1,80 @@
+<link rel="import" href="../../../components/cells-component-app-header/cells-component-app-header.html">
+<link rel="import" href="../../../components/cells-st-button/cells-st-button.html">
+<dom-module id="evolution-detail-ui">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .container-info{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .container-detail{
+        border-bottom: 1px solid black;
+      }
+    </style>
+      <div slot="app__header">
+        <cells-component-app-header text="PokeDesk - Evolution Pokemon">
+        </cells-component-app-header>
+      </div>
+      <div slot="app__main">
+        <div class="container-info">
+          <template is="dom-repeat" items="[[data]]">
+            <div class="container-detail">
+              <h1>Evolution - Level [[index]]</h1>
+              <h1>[[item.pokemonNameEvolution]]</h1>
+              <img src="[[item.pokemonImgEvolution]]">
+            </div>
+          </template>
+          <cells-st-button class="composed primary">
+            <button on-click="_goToHome">
+                <span class="btn-contents">
+                  <iron-icon class="btn-icon" icon="coronita:back"></iron-icon>
+                  <span class="btn-text">
+                    Back to Detail
+                  </span>
+                </span>
+              </button>
+          </cells-st-button>
+        </div>
+      </div>
+  </template>
+
+  <script>
+    class EvolutionDetailUi extends Polymer.Element {
+
+      static get is() {
+        return 'evolution-detail-ui';
+      }
+
+      // Declare properties for the element's public API
+      static get properties() {
+        return {
+          data: {
+            type: Array,
+            value: function() {
+              return [];
+            }
+          }
+        };
+      }
+
+      getDataEvolutionChannel(evolutionData) {
+        this.data = evolutionData;
+      }
+
+      _goToHome() {
+        this.dispatchEvent(new CustomEvent('detail-event', {
+          bubbles: true,
+          composed: true
+        }));
+      }
+    }
+    customElements.define(EvolutionDetailUi.is, EvolutionDetailUi);
+  </script>
+
+</dom-module>

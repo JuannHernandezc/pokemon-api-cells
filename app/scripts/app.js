@@ -5,7 +5,7 @@
     routes: {
       'login': '/',
       'another': '/another',
-      'routerExample': '/routerExample/:queryStringToPrettyUrl'
+      'evolution': '/evolution'
     }
   });
 }(document));

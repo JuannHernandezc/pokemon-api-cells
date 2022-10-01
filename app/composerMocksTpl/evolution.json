@@ -10,14 +10,18 @@
     {
       "zone": "app__main",
       "type": "DM",
-      "familyPath": "../elements/api-data-manager",
-      "tag": "api-data-manager",
+      "familyPath": "../elements/evolution-data-manager",
+      "tag": "evolution-data-manager",
       "properties": {
         "cellsConnections": {
-          "in": {},
+          "in": {
+            "go-evolution": {
+              "bind": "getEvolutionLink"
+            }
+          },
           "out": {
-            "api-data-pokemon": {
-              "bind": "send-data-pokemon-card"
+            "data-evolution-pokemon":{
+              "bind": "send-evolution-data"
             }
           }
         }
@@ -26,23 +30,20 @@
     {
       "zone": "app__main",
       "type": "UI",
-      "familyPath": "../elements/card-list-ui",
-      "tag": "card-list-ui",
+      "familyPath": "../elements/evolution-detail-ui",
+      "tag": "evolution-detail-ui",
       "properties": {
         "cellsConnections": {
           "in": {
-            "api-data-pokemon": {
-              "bind": "setDataImages"
+            "data-evolution-pokemon": {
+              "bind": "getDataEvolutionChannel"
             }
           },
           "out": {
-            "data-detail-card":{
-              "bind": "set-data-detail",
+            "back-detail": {
+              "bind": "detail-event",
               "link": {
-                "page": "another",
-                "params": {
-                  "id": "id"
-                }
+                "page": "another"
               }
             }
           }

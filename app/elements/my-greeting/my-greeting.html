@@ -2,14 +2,6 @@
 <dom-module id="my-greeting">
 
   <template>
-    <cells-generic-dp 
-    id="myDataProvider"
-    host="https://pokeapi.co/api/v2"
-    path="pokemon"
-    method="GET"
-    on-request-success="setResponse"
-    auto
-  ></cells-generic-dp>
   </template>
 
   <script>
@@ -28,10 +20,6 @@
             notify: true
           }
         };
-      }
-
-      setResponse(e){
-        console.log(e.detail.results);
       }
     }
 

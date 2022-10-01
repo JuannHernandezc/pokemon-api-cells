@@ -19,7 +19,20 @@
               "bind": "getDataDetailPokemon"
             }
           },
-          "out": {}
+          "out": {
+            "back-home": {
+              "bind": "home-event",
+              "link": {
+                "page": "login"
+              }
+            },
+            "go-evolution": {
+              "bind": "evolution-event",
+              "link": {
+                "page": "evolution"
+              }
+            }
+          }
         }
       }
     }

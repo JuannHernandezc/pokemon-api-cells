@@ -66,11 +66,17 @@
               return [];
             }
           },
+          species: {
+            type: Object,
+            value: function() {
+              return {};
+            }
+          },
           textBtn: {type: String}
         };
       }
 
-      handleDetail(){
+      handleDetail() {
         return {
           namePokemon: this.namePokemon,
           urlImagePokemon: this.urlImagePokemon,
@@ -78,22 +84,20 @@
           id: this.id,
           abilities: this.abilities,
           stats: this.stats,
-          types: this.types
-        }
+          types: this.types,
+          species: this.species
+        };
       }
 
-      handleClick(){
-        this.dispatchEvent( new CustomEvent('set-data-detail', 
-          { 
+      handleClick() {
+        this.dispatchEvent(new CustomEvent('set-data-detail',
+          {
             bubbles: true,
             composed: true,
             detail: this.handleDetail()
           }
         ));
-        console.log('Evento enviado al momento de dar click en more details');
-        console.log(this.handleDetail());
       }
-      
     }
     customElements.define(CardUi.is, CardUi);
   </script>

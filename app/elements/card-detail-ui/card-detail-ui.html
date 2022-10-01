@@ -12,27 +12,10 @@
         display: block;
         width: 40%;
         margin: 50px auto;
-        /* width: 100%;
-        min-height: 100vh; */
-        /* display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: 1rem; */
       }
-
-      /* .container-elements{
-        display: flex;
-        width: 100%;
-        height: 100%;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-      } */
     </style>
       <div slot="app__header">
-        <cells-component-app-header text="PokeDesk - Detail" icon-left="coronita:return-12" left-button-pressed="prueba">
+        <cells-component-app-header text="PokeDesk - Detail">
         </cells-component-app-header>
       </div>
       <div slot="app__main">
@@ -69,15 +52,28 @@
             </p>
 
             <cells-st-button class="composed primary">
-              <button on-click="prueba">
+              <button on-click="_goToEvolution">
                   <span class="btn-contents">
-                    <iron-icon class="btn-icon" icon="coronita:back"></iron-icon>
-                    <span class="btn-text" data-detail-gifs = "handleDetail">
+                    <iron-icon class="btn-icon" icon="coronita:consult"></iron-icon>
+                    <span class="btn-text">
                       Evolution
                     </span>
                   </span>
                 </button>
             </cells-st-button>
+
+            <cells-st-button class="composed primary">
+              <button on-click="_goToHome">
+                  <span class="btn-contents">
+                    <iron-icon class="btn-icon" icon="coronita:back"></iron-icon>
+                    <span class="btn-text">
+                      Back to Home
+                    </span>
+                  </span>
+                </button>
+            </cells-st-button>
+            
+            
           </div>
           </cells-image-card>
         </div>
@@ -115,13 +111,17 @@
             value: function() {
               return [];
             }
+          },
+          species: {
+            type: Object,
+            value: function() {
+              return {};
+            }
           }
         };
       }
 
       getDataDetailPokemon(detail) {
-        console.log("Detail => Informacion recibida por canal ");
-        console.log(detail);
         this.namePokemon = detail.namePokemon;
         this.urlImagePokemon = detail.urlImagePokemon;
         this.weight = detail.weight;
@@ -129,9 +129,22 @@
         this.abilities = detail.abilities;
         this.stats = detail.stats;
         this.types = detail.types;
+        this.species = detail.species;
       }
-      prueba(){
-        this.navigate("login");
+
+      _goToHome() {
+        this.dispatchEvent(new CustomEvent('home-event', {
+          bubbles: true,
+          composed: true
+        }));
+      }
+
+      _goToEvolution() {
+        this.dispatchEvent(new CustomEvent('evolution-event', {
+          bubbles: true,
+          composed: true,
+          detail: this.species
+        }));
       }
     }
     customElements.define(CardDetailUi.is, CardDetailUi);
