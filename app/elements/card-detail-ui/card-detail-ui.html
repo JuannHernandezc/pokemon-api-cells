@@ -7,6 +7,12 @@
     <style>
       :host {
         display: block;
+        --cells-image-card-wrapper-image-img: {
+        width: 30%;
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+      }
       }
       .card{
         display: block;
@@ -122,8 +128,8 @@
       }
 
       getDataDetailPokemon(detail) {
-        this.namePokemon = detail.namePokemon;
-        this.urlImagePokemon = detail.urlImagePokemon;
+        this.namePokemon = detail.name;
+        this.urlImagePokemon = detail.urlImage;
         this.weight = detail.weight;
         this.id = detail.id;
         this.abilities = detail.abilities;

@@ -24,16 +24,11 @@
           <template is="dom-repeat" items="[[data]]">
             <div class="card">
               <card-ui 
-                name-pokemon="[[item.name]]" 
-                url-image-pokemon="[[item.urlImage]]" 
-                id="[[item.id]]"
-                abilities="[[item.abilities]]"
-                weight="[[item.weight]]"
-                stats="[[item.stats]]"
-                types="[[item.types]]"
-                species="[[item.species]]"
-                text-btn="More details">
-              </card-ui>
+              name-pokemon="[[item.name]]" 
+              url-image-pokemon="[[item.urlImage]]"
+              url-item-pokemon="[[item.url]]"
+              text-btn="More details">
+            </card-ui>
             </div>
           </template>
         </div>

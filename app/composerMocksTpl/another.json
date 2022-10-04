@@ -15,7 +15,7 @@
       "properties": {
         "cellsConnections": {
           "in": {
-            "data-detail-card": {
+            "api-data-detail-pokemon": {
               "bind": "getDataDetailPokemon"
             }
           },

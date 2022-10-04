@@ -5,13 +5,17 @@
     <cells-generic-dp 
       host="https://pokeapi.co/api/v2"
       path="pokemon"
+      params='{"limit":"40"}'
       method="GET"
       on-request-success="setResponse"
       auto
   ></cells-generic-dp>
-  <template is="dom-repeat" items="[[listPokemon]]">
+
+  <template is="dom-if" if="[[singlePokemon]]">
     <cells-generic-dp
-      host="[[item.url]]"
+      class="prueba"
+      id="dataProvider"
+      host="[[singlePokemon.urlItemPokemon]]"
       method="GET"
       on-request-success="setResponseImages"
       auto
@@ -29,30 +33,32 @@
       // Declare properties for the element's public API
       static get properties() {
         return {
-          host: {type: String},
-          path: {type: String},
-          method: {type: String},
-          listPokemonInfoCard: {
-            type: Array,
-            value: function() {
-              return [];
-            }
-          },
-          listPokemon: {
-            type: Array,
-            value: function() {
-              return [];
-            }
-          },
+          singlePokemon: {
+            type: Object
+          }
         };
       }
 
       setResponse(e) {
-        this.listPokemon = e.detail.results;
+        const listPokemonWithIndex = e.detail.results.map((item, index) => {
+          return(
+            {
+              name: item.name,
+              url: item.url,
+              urlImage: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${index + 1}.png`
+            }
+          )
+        });
+
+        this._fireEvent('send-data-pokemon-card', listPokemonWithIndex);
+      }
+
+      getDataClick(detail) {
+        this.singlePokemon = detail;  
       }
 
       setResponseImages(e) {
-        this.push('listPokemonInfoCard', {
+        const detailsPokemonSelected = {
           id: e.detail.id,
           name: e.detail.name,
           urlImage: e.detail.sprites.other.home.front_default,
@@ -61,11 +67,8 @@
           types: e.detail.types,
           stats: e.detail.stats,
           species: e.detail.species
-        });
-
-        if (this.listPokemonInfoCard.length === 20) {
-          this._fireEvent('send-data-pokemon-card', this.listPokemonInfoCard);
         }
+        this._fireEvent('send-data-detail-pokemon', detailsPokemonSelected);
       }
 
       _fireEvent(eventName, detail) {

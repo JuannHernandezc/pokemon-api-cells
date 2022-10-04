@@ -8,7 +8,8 @@
     "cells-component-app-header": "^12.0.6",
     "cells-image-card": "^12.5.1",
     "cells-st-button": "^13.8.1",
-    "coronita-icons": "^14.11.0"
+    "coronita-icons": "^14.11.0",
+    "cells-avatar-item": "^15.0.1"
   },
   "resolutions": {
     "polymer": "^2.0.0"

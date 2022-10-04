@@ -4,6 +4,12 @@
 <dom-module id="card-ui">
   <template>
     <style>
+      :host{
+        display: block;
+        --cells-image-card-wrapper-image:{
+          margin: 2rem;
+        }
+      }
       .container-elements{
         display: flex;
         width: 100%;
@@ -23,7 +29,7 @@
           <button on-click="handleClick">
               <span class="btn-contents">
                 <iron-icon class="btn-icon" icon="coronita:advance"></iron-icon>
-                <span class="btn-text" data-detail-gifs = "handleDetail">
+                <span class="btn-text">
                   [[textBtn]]
                 </span>
               </span>
@@ -46,32 +52,7 @@
         return {
           namePokemon: {type: String},
           urlImagePokemon: {type: String},
-          weight: {type: Number},
-          id: {type: Number},
-          abilities: {
-            type: Array,
-            value: function() {
-              return [];
-            }
-          },
-          stats: {
-            type: Array,
-            value: function() {
-              return [];
-            }
-          },
-          types: {
-            type: Array,
-            value: function() {
-              return [];
-            }
-          },
-          species: {
-            type: Object,
-            value: function() {
-              return {};
-            }
-          },
+          urlItemPokemon: {type: String},
           textBtn: {type: String}
         };
       }
@@ -80,12 +61,7 @@
         return {
           namePokemon: this.namePokemon,
           urlImagePokemon: this.urlImagePokemon,
-          weight: this.weight,
-          id: this.id,
-          abilities: this.abilities,
-          stats: this.stats,
-          types: this.types,
-          species: this.species
+          urlItemPokemon: this.urlItemPokemon
         };
       }
 

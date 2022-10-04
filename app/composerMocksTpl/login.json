@@ -14,10 +14,20 @@
       "tag": "api-data-manager",
       "properties": {
         "cellsConnections": {
-          "in": {},
+          "in": {
+            "data-detail-card": {
+              "bind": "getDataClick"
+            }
+          },
           "out": {
             "api-data-pokemon": {
               "bind": "send-data-pokemon-card"
+            },
+            "api-data-detail-pokemon": {
+              "bind": "send-data-detail-pokemon",
+              "link": {
+                "page": "another"
+              }
             }
           }
         }
@@ -37,13 +47,7 @@
           },
           "out": {
             "data-detail-card":{
-              "bind": "set-data-detail",
-              "link": {
-                "page": "another",
-                "params": {
-                  "id": "id"
-                }
-              }
+              "bind": "set-data-detail"
             }
           }
         }
