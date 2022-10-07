@@ -17,6 +17,9 @@
           "in": {
             "data-detail-card": {
               "bind": "getDataClick"
+            },
+            "pagination-select":{
+              "bind": "selectedPagination"
             }
           },
           "out": {
@@ -48,6 +51,9 @@
           "out": {
             "data-detail-card":{
               "bind": "set-data-detail"
+            },
+            "pagination-select":{
+              "bind": "pagination-change"
             }
           }
         }

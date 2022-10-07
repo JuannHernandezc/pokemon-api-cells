@@ -9,7 +9,8 @@
     "cells-image-card": "^12.5.1",
     "cells-st-button": "^13.8.1",
     "coronita-icons": "^14.11.0",
-    "cells-avatar-item": "^15.0.1"
+    "cells-avatar-item": "^15.0.1",
+    "cells-pagination": "^12.0.5"
   },
   "resolutions": {
     "polymer": "^2.0.0"

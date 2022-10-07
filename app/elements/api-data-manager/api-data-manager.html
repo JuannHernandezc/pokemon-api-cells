@@ -2,14 +2,22 @@
 <dom-module id="api-data-manager">
 
   <template>
-    <cells-generic-dp 
+    <cells-generic-dp
+      id="dataProviderPokemon" 
       host="https://pokeapi.co/api/v2"
       path="pokemon"
-      params='{"limit":"40"}'
+      params='{"limit": "10"}'
       method="GET"
       on-request-success="setResponse"
       auto
   ></cells-generic-dp>
+
+  <cells-generic-dp
+    id="dataProviderPokemon" 
+    host="[[pageSelected]]"
+    method="GET"
+    on-request-success="setResponse"
+></cells-generic-dp>
 
   <template is="dom-if" if="[[singlePokemon]]">
     <cells-generic-dp
@@ -35,18 +43,22 @@
         return {
           singlePokemon: {
             type: Object
+          },
+          pageSelected: {
+            type: Number
           }
         };
       }
 
       setResponse(e) {
         const listPokemonWithIndex = e.detail.results.map((item, index) => {
+          const regex = /(\d+)/g;
+          let extract = item.url.match(regex).join("").replace(2,"")
           return(
             {
               name: item.name,
               url: item.url,
-              urlImage: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${index + 1}.png`,
-              urlEvolution: `https://pokeapi.co/api/v2/evolution-chain/${index + 1}`,
+              urlImage: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${extract}.png`,
             }
           )
         });
@@ -69,6 +81,22 @@
           species: e.detail.species
         }
         this._fireEvent('send-data-detail-pokemon', detailsPokemonSelected);
+      }
+
+      selectedPagination(numPage){
+        if(numPage != 0){
+          this.pageSelected = `https://pokeapi.co/api/v2/pokemon/?offset=${numPage * 10}&limit=10`;
+          this.$.dataProviderPokemon.generateRequest();
+        }else{
+          this.pageSelected = `https://pokeapi.co/api/v2/pokemon/?offset=${numPage}&limit=10`;
+          this.$.dataProviderPokemon.generateRequest();
+        }
+      }
+
+      eventInitial() {
+        this.pageSelected = `https://pokeapi.co/api/v2/pokemon/?offset=10&limit=10`;
+          this.$.dataProviderPokemon.generateRequest();
+          console.log("Ejecutar");
       }
 
       _fireEvent(eventName, detail) {

@@ -1,5 +1,6 @@
 <link rel="import" href="../../../components/cells-component-app-header/cells-component-app-header.html">
 <link rel="import" href="../../elements/card-ui/card-ui.html">
+<link rel="import" href="../../../components/cells-pagination/cells-pagination.html">
 <dom-module id="card-list-ui">
   <template>
     <style>
@@ -33,6 +34,12 @@
             </div>
           </template>
         </div>
+      </div>
+      <div slot="app__footer">
+        <cells-pagination 
+          collection-size="200"
+          boundary-links>
+        </cells-pagination>
       </div>
   </template>
 
